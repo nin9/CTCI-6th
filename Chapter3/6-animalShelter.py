@@ -25,7 +25,7 @@ class AnimalQueue:
     animel.order = self.order
     self.order += 1
 
-    if animel.__class__.__name__ == 'Dog':
+    if isinstance(animel, Dog):
       self.dogs.append(animel)
     else:
       self.cats.append(animel)
@@ -56,4 +56,6 @@ queue.enqueue(Cat('cat2'))
 queue.enqueue(Dog('dog1'))
 queue.enqueue(Dog('dog2'))
 
+print(queue.dequeueAny().name)
+print(queue.dequeueAny().name)
 print(queue.dequeueAny().name)
