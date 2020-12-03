@@ -38,8 +38,8 @@ class AnimalQueue:
     dog = self.dogs[0]
     cat = self.cats[0]
     if cat.isOlder(dog):
-      return cat
-    return dog
+      return self.dequeueCat()
+    return self.dequeueDog()
 
   def dequeueCat(self) -> 'Animal':
     return self.cats.popleft()
