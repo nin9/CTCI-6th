@@ -1,6 +1,9 @@
-def countWays(exp: str, result: bool, memo) -> int:
+def string_to_bool(s: str) -> bool:
+  return s == '1'
+
+def count_ways(exp: str, result: bool, memo) -> int:
   if len(exp) == 0: return 0
-  if len(exp) == 1: return 1 if bool(exp) == result else 0
+  if len(exp) == 1: return 1 if string_to_bool(exp) == result else 0
 
   if exp + str(result) in memo: return memo[exp + str(result)]
 
@@ -9,22 +12,22 @@ def countWays(exp: str, result: bool, memo) -> int:
     left = exp[:i]
     right = exp[i+1:]
 
-    leftTrue = countWays(left, True, memo)
-    leftFalse = countWays(left, False, memo)
-    rightTrue = countWays(right, True, memo)
-    rightFalse = countWays(right, False, memo)
+    left_true = count_ways(left, True, memo)
+    left_false = count_ways(left, False, memo)
+    right_true = count_ways(right, True, memo)
+    right_false = count_ways(right, False, memo)
 
-    total = (leftTrue + leftFalse) * (rightTrue + rightFalse)
+    total = (left_true + left_false) * (right_true + right_false)
 
-    totalTrue = 0
+    total_true = 0
     if exp[i] == '|':
-      totalTrue = leftTrue * rightTrue + leftFalse * rightTrue + leftTrue * rightFalse
+      total_true = left_true * right_true + left_false * right_true + left_true * right_false
     elif exp[i] == '&':
-      totalTrue =  leftTrue * rightTrue
-    elif exp == '^':
-      totalTrue = leftTrue * rightFalse + leftFalse * rightTrue
+      total_true =  left_true * right_true
+    elif exp[i] == '^':
+      total_true = left_true * right_false + left_false * right_true
 
-    subways = totalTrue if result else (total - totalTrue)
+    subways = total_true if result else (total - total_true)
     ways += subways
 
   memo[exp + str(result)] = ways
@@ -33,7 +36,8 @@ def countWays(exp: str, result: bool, memo) -> int:
 
 def evaluate(exp: str, result: bool) -> int:
   memo = {}
-  return countWays(exp, result, memo)
+  return count_ways(exp, result, memo)
 
 
 print(evaluate('1^0|0|1', False))
+print(evaluate('0&0&0&1^1|0', True))
