@@ -50,11 +50,11 @@ def zeroMatix2(matrix: List[List[int]]) -> List[List[int]]:
         matrix[0][j] = 0
         matrix[i][0] = 0
 
-  for j in range(c):
+  for j in range(1, c):
     if matrix[0][j] == 0:
       nullifyCol(matrix, j)
 
-  for i in range(r):
+  for i in range(1, r):
     if matrix[i][0] == 0:
       nullifyRow(matrix, i)
 
